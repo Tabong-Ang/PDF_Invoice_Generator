@@ -11,8 +11,11 @@ def resource_path(relative_path):
 
 root = Tk()
 root.title('Invoice Generator')
-root.geometry('500x550')
+root.geometry('600x600')
+root.configure(bg='#f7f9fc')
 root.iconbitmap(resource_path('images/photo.ico'))
+font_main = ("Segoe UI", 11)
+font_title = ("Segoe UI", 14, "bold")
 
 medicines = {
     'Medicine A': 10,
@@ -65,44 +68,45 @@ def generate_invoice():
             new_x='LMARGIN', new_y='NEXT', align='L')
     pdf.output('invoice.pdf')
 
-medicine_label = Label(root, text='Medicine')
-medicine_label.pack()
+# Medicine Selection Frame
+medicine_frame = Frame(root, bg='#f7f9fc')
+medicine_frame.grid(row=0, column=0, columnspan=2, pady=(20, 10), padx=20, sticky='w')
 
-medicine_listbox = Listbox(root, selectmode=SINGLE)
+Label(medicine_frame, text='Select Medicine:', font=font_main, bg='#f7f9fc', fg='#2c3e50').grid(row=0, column=0, sticky='w')
+medicine_listbox = Listbox(medicine_frame, selectmode=SINGLE, font=font_main, bg='white', fg='#2c3e50', bd=1, relief='solid', height=6)
+medicine_listbox.grid(row=1, column=0, pady=5)
 for medicine in medicines:
     medicine_listbox.insert(END, medicine)
-medicine_listbox.pack()
 
-qty_label = Label(root, text='Quantity')
-qty_label.pack()
+Label(medicine_frame, text='Quantity:', font=font_main, bg='#f7f9fc', fg='#2c3e50').grid(row=0, column=1, padx=(20, 0), sticky='w')
+qty_entry = Entry(medicine_frame, font=font_main, bg='white', fg='#2c3e50', bd=1, relief='solid', width=10)
+qty_entry.grid(row=1, column=1, padx=(20, 0), pady=5)
 
-qty_entry = Entry(root)
-qty_entry.pack()
+add_btn = Button(medicine_frame, text='Add Medicine', font=font_main, bg='#3498db', fg='white', activebackground='#2980b9', command=add_medicine)
+add_btn.grid(row=2, column=0, columnspan=2, pady=10)
 
-add_btn = Button(root, text='Add Medicine', command=add_medicine)
-add_btn.pack()
+# Invoice Summary Frame
+summary_frame = Frame(root, bg='#f7f9fc')
+summary_frame.grid(row=1, column=0, columnspan=2, pady=10, padx=20, sticky='w')
 
-total_amt_label = Label(root, text='Total Amount')
-total_amt_label.pack()
+Label(summary_frame, text='Total Amount:', font=font_main, bg='#f7f9fc', fg='#2c3e50').grid(row=0, column=0, sticky='w')
+total_amt_entry = Entry(summary_frame, font=font_main, bg='white', fg='#2c3e50', bd=1, relief='solid', width=20)
+total_amt_entry.grid(row=0, column=1, padx=10, pady=5)
 
-total_amt_entry = Entry(root)
-total_amt_entry.pack()
+Label(summary_frame, text='Customer Name:', font=font_main, bg='#f7f9fc', fg='#2c3e50').grid(row=1, column=0, sticky='w')
+customer_entry = Entry(summary_frame, font=font_main, bg='white', fg='#2c3e50', bd=1, relief='solid', width=20)
+customer_entry.grid(row=1, column=1, padx=10, pady=5)
 
-customer_label = Label(root, text='Customer Name: ')
-customer_label.pack()
+generate_invoice_btn = Button(summary_frame, text='Generate Invoice', font=font_main, bg='#27ae60', fg='white', activebackground='#1e8449', command=generate_invoice)
+generate_invoice_btn.grid(row=2, column=0, columnspan=2, pady=10)
 
-customer_entry = Entry(root)
-customer_entry.pack()
-
-generate_invoice_btn = Button(root, text='Generate Invoice', command=generate_invoice)
-generate_invoice_btn.pack()
-
-invoice_text = Text(root, height=10, width=50)
-invoice_text.pack()
+# Invoice Text Display
+invoice_text = Text(root, height=10, width=60, font=font_main, bg='white', fg='#2c3e50', bd=1, relief='solid')
+invoice_text.grid(row=2, column=0, columnspan=2, padx=20, pady=10)
 
 # Footer
-footer = Label(root, text="© 2025 PhilipsTech | PDF Invoice Generator", font=("Arial", 10), bg="#f0f4f8", fg="#888")
-footer.pack(pady=10)
+footer = Label(root, text="© 2025 PhilipsTech | PDF Invoice Generator", font=("Segoe UI", 9), bg="#f7f9fc", fg="#888")
+footer.grid(row=3, column=0, columnspan=2, pady=10)
 
 root.mainloop()
 
