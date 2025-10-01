@@ -1,10 +1,18 @@
 from fpdf import FPDF
 from tkinter import *
+import sys, os
 
+def resource_path(relative_path):
+    try:
+        base_path = sys.MEIPass
+    except Exception:
+        base_path = os.path.abspath('.')
+        return os.path.join(base_path, relative_path)
 
 root = Tk()
 root.title('Invoice Generator')
 root.geometry('500x550')
+root.iconbitmap(resource_path('images/photo.ico'))
 
 medicines = {
     'Medicine A': 10,
