@@ -100,7 +100,9 @@ generate_invoice_btn.pack()
 invoice_text = Text(root, height=10, width=50)
 invoice_text.pack()
 
+# Footer
+footer = Label(root, text="© 2025 PhilipsTech | PDF Invoice Generator", font=("Arial", 10), bg="#f0f4f8", fg="#888")
+footer.pack(pady=10)
 
-pdf = FPDF()
 root.mainloop()
 
