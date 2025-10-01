@@ -44,15 +44,16 @@ def generate_invoice():
 
     pdf = FPDF()
     pdf.add_page()
+    pdf.set_font('helvetica', size=12)
 
-    pdf.cell(0, 10, txt='Invoice', new_x='LMARGIN', new_y='NEXT', align='C')
-    pdf.cell(0, 10, txt='Customer: ' + customer_name, new_x='LMARGIN', new_y='NEXT', align='L')
-    pdf.cell(0, 10, txt='', new_x='LMARGIN', new_y='NEXT')
+    pdf.cell(0, 10, text='Invoice', new_x='LMARGIN', new_y='NEXT', align='C')
+    pdf.cell(0, 10, text='Customer: ' + customer_name, new_x='LMARGIN', new_y='NEXT', align='L')
+    pdf.cell(0, 10, text='', new_x='LMARGIN', new_y='NEXT')
     for item in invoice_items:
         medicine_name, quantity, total_item = item
-        pdf.cell(0, 10, txt=f'Medicine: {medicine_name}\n Quantity: {quantity}\n Total: {total_item}', 
+        pdf.cell(0, 10, text=f'Medicine: {medicine_name}\n Quantity: {quantity}\n Total: {total_item}', 
                 new_x='LMARGIN', new_y='NEXT', align='L')
-    pdf.cell(0, 10, txt='Total Amount: ' + str(calculate_total()),
+    pdf.cell(0, 10, text='Total Amount: ' + str(calculate_total()),
             new_x='LMARGIN', new_y='NEXT', align='L')
     pdf.output('invoice.pdf')
 
@@ -85,8 +86,8 @@ customer_label.pack()
 customer_entry = Entry(root)
 customer_entry.pack()
 
-generate_btn = Button(root, text='Generate Invoice')
-generate_btn.pack()
+generate_invoice_btn = Button(root, text='Generate Invoice', command=generate_invoice)
+generate_invoice_btn.pack()
 
 invoice_text = Text(root, height=10, width=50)
 invoice_text.pack()
