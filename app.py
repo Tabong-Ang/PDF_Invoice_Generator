@@ -39,8 +39,22 @@ def update_invoice_text():
     for item in invoice_items:
         invoice_text.insert(END, f'Medicine: {item[0]}\nQuantity: {item[1]}\nTotal: {item[2]}\n-------------------\n')
 
+def generate_invoice():
+    customer_name = customer_entry.get()
 
+    pdf = FPDF()
+    pdf.add_page()
 
+    pdf.cell(0, 10, txt='Invoice', new_x='LMARGIN', new_y='NEXT', align='C')
+    pdf.cell(0, 10, txt='Customer: ' + customer_name, new_x='LMARGIN', new_y='NEXT', align='L')
+    pdf.cell(0, 10, txt='', new_x='LMARGIN', new_y='NEXT')
+    for item in invoice_items:
+        medicine_name, quantity, total_item = item
+        pdf.cell(0, 10, txt=f'Medicine: {medicine_name}\n Quantity: {quantity}\n Total: {total_item}', 
+                new_x='LMARGIN', new_y='NEXT', align='L')
+    pdf.cell(0, 10, txt='Total Amount: ' + str(calculate_total()),
+            new_x='LMARGIN', new_y='NEXT', align='L')
+    pdf.output('invoice.pdf')
 
 medicine_label = Label(root, text='Medicine')
 medicine_label.pack()
